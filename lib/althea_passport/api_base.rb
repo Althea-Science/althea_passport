@@ -5,18 +5,22 @@ module AltheaPassport
     class << self
 
       def call_althea_api(method, token, url, attributes = nil)
-        response = Faraday.send(method, url, attributes) do |req|
-          req.headers['Authorization'] = "Token #{token}"
-        end
-
-        if response.success?
-          if block_given?
-            yield(response)
-          else
-            response
+        begin
+          response = Faraday.send(method, url, attributes) do |req|
+            req.headers['Authorization'] = "Token #{token}"
           end
-        else
-          raise AltheaPassport::ApiException.new("Http error status code: #{response.status} url: #{url}")
+
+          if response.success?
+            if block_given?
+              yield(response)
+            else
+              response
+            end
+          else
+            raise AltheaPassport::ApiException.new("Http error status code: #{response.status} url: #{url}")
+          end
+        rescue => e
+          Honeybadger.notify(e)
         end
       end
 
