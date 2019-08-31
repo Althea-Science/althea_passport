@@ -28,12 +28,16 @@ module AltheaPassport
           session: request.session.to_hash
         }
 
-        AltheaPassport::ApiBase.call_althea_api(
-          :post,
-           request.session.to_hash[:token],
-          AltheaPassport.configuration.insights_url,
-          data
-        )
+        begin
+          AltheaPassport::ApiBase.call_althea_api(
+            :post,
+             request.session.to_hash[:token],
+            AltheaPassport.configuration.insights_url,
+            data
+          )
+        rescue => e
+          # need to do something here
+        end
       end
     end
 
