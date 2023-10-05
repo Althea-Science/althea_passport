@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rest-client", "~> 2.0"
   spec.add_dependency "faraday", "~> 0.13"
-  spec.add_dependency "json", "~> 1.8"
+  spec.add_dependency 'json', '~> 2.6', '>= 2.6.3'
   spec.add_dependency "jwt", "~> 1.5"
   # spec.add_dependency "mongo", "~> 2.4"
 end
